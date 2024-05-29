@@ -1,0 +1,116 @@
+@import "./mixins/form";
+@import "reset";
+@import "grid/grid";
+@import "./color/_color";
+
+form,
+.caixa {
+    @include Form();
+}
+
+
+
+.btn {
+    @include button();
+    border:1pxx solid $cor1;
+    background-color: lighten($cor1,40%);
+    box-shadow: 2px 2px 0px $cor1;
+}
+
+.btnClose {
+    @include button();
+    border:1pxx solid $inversa;
+    background-color: lighten($inversa,30%);
+    box-shadow: 2px 2px 0px $inversa;
+}
+
+
+
+#abas {
+    margin-top: 0.9765625vw;
+    ul {
+        border-bottom: 1px solid $cor1;
+        padding: 2vw;
+        padding-bottom: 0;
+        display: flex;
+        gap: 2vw;
+        font-size: 1.2vw;
+        li {
+        }
+        margin-bottom: 1vw;
+    }
+}
+
+.efeitoAba {
+    border: 1px solid $cor1;
+    border-bottom: none;
+    padding-left: 1vw;
+    padding-right: 1vw;
+    padding-top: 1vw;
+    border-top-left-radius: 0.3vw;
+    border-top-right-radius: 0.3vw;
+    border-bottom: 0px;
+    bottom: 1.171875vw;
+    position: relative;
+    padding-bottom: 1.26953125vw;
+}
+
+label:has(.thumbMini) {
+    border: 1px solid $cor1;
+}
+
+.thumbMini {
+    max-width: 10vw;
+    border-radius: 0.4vw;
+    box-shadow: 2px 2px 4px $cor1;
+    border: 0.29296875vw solid $cor1;
+    filter: grayscale(30%);
+    &:hover {
+        filter: grayscale(1%);
+        border: 0.29296875vw solid $cor3;
+    }
+}
+
+table {
+    margin-top: 2vw;
+    margin-bottom: 2vw;
+    width: 100%;
+    border: 1px solid $cor1;
+
+    tbody {
+        tr {
+            &:hover {
+                background-color: $cor3;
+                td {
+                    color: lighten($inversa, 40%);
+                }
+            }
+        }
+    }
+    td {
+        border: 1px solid $cor1;
+        padding: 0.5vw;
+        text-align: center;
+        color: $cor1;
+        background-color: transparent;
+    }
+}
+
+#editarVacina {
+    border: 1px solid $cor1;
+    padding: 0.7vw;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    width: 80vw;
+    z-index: 3000;
+}
+
+#fundaoEdiçoes {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    background-color: rgba(255, 255, 255, 0.7);
+}

@@ -13,6 +13,7 @@ class MeusPets extends Model
         'user_id', 
         'nome', 
         'tipo', 
-        'foto'
+        'foto', 
+        'descricao'
     ];
 }

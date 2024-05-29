@@ -10,6 +10,7 @@ use App\Models\pets\LarTemporario;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+
 class CadastrosControllers extends Controller
 {
     public function index()
@@ -28,6 +29,9 @@ class CadastrosControllers extends Controller
         $PetsData = CadastroPet::where('user_id', $user->id)->get();
 
         return view('pets.cadastro', compact('dados', 'token', 'cadastro','larTemp', 'PetsData'));
+
+        ///return view('pets.templates.index', compact('dados', 'token', 'cadastro','larTemp', 'PetsData'));
+
 
     }
 
@@ -57,16 +61,31 @@ class CadastrosControllers extends Controller
 
         if ($cadastro) {
             // A operação foi bem-sucedida
-            return response()->json(['message' => 'Cadastro salvo com sucesso'], 200);
+            return response()->json(['message' => 'Cadastro salvo com sucesso',"codigo"=>1], 200);
         } else {
             // A operação falhou
-            return response()->json(['message' => 'Erro ao salvar o cadastro'], 500);
+            return response()->json(['message' => 'Erro ao salvar o cadastro',"codigo"=>0], 500);
         }
     }
 /************************************************************/
 /************************************************************/
 
 
+
+
+
+
+public function DadosPessoais(request $request){
+
+    $id= $request->input('id');
+
+    $cadastro = Cadastros::where('user_id', $id)->first();
+
+    $user = Auth::user();
+
+    return response()->json(['message' => 'ok','codigo'=>1,"id"=>$id, 'user'=>$user ,'dados'=>$cadastro]);
+
+}
 
 
 

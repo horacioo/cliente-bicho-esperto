@@ -1,0 +1,7 @@
+//$cor1: rgb(0, 70, 128); 
+//$cor1: hsl(186, 100%, 35%);
+$cor1: hsl(276, 100%, 12%);
+//$cor2: #FF8300; 
+$cor2: adjust-hue($cor1,270deg);
+$cor3: adjust-hue($cor1,-10deg);//$cor3: adjust-hue($cor1,180deg);
+$inversa:adjust-hue($cor3,180deg);

@@ -1,0 +1,119 @@
+@import "./../color/_color";
+@mixin Form(){
+
+
+    background-image: linear-gradient(to bottom, lighten($cor1, 72%), lighten($cor2, 74%));
+
+    border:1px solid $cor1;
+
+    border-radius: 0.4vw;
+
+    margin-bottom: 1vw;
+
+    padding: 2vw;
+
+    max-width: 90vw;
+
+    h1,h2,h3{@include titulos();}
+   
+    input, select, textarea, td{ @include inputs(); }
+
+    label{ @include label(); }
+
+    ul{@include listas(); }
+
+    input[type="file"],input[type="submit"], buttom  {background-color: $cor1; color: white; max-width: 30vw;}
+
+    textarea, .text{@include inputs(); flex: 1; min-height: 30vh; padding: 1.2vw; margin-bottom: 2vw;}
+
+    box-shadow: 2px 2px 1px grey;
+
+    @content;
+}
+
+
+@mixin listas(){
+
+
+display: flex;
+    li{
+        border:1px solid  $cor1; 
+        width: 19vw;
+        height: 15vw;
+        overflow: hidden;
+        position: relative;
+        display: block;
+        margin-right: 0.6vw;
+        img{  
+            max-width: 19vw;  
+            position: absolute;
+            min-width: 110%;
+            left: 50%;
+            top:50%;
+            transform: translate(-50%,-50%);
+            border-radius: 0.5vw;
+            border:1px solid  $cor1;
+        }
+        div{
+            position: absolute;
+            bottom:0%;
+            left:0%;
+            z-index: 333;
+            background-color: rgba(255, 255, 255, 0.459);
+            padding: 1vw;
+            width: 100%;
+            bottom: 0;
+            color:   $cor1;
+        }
+        
+    }
+}
+
+
+
+@mixin titulos(){
+    font-size: 1.953125vw;
+    color:  $cor1;
+    font-family: "Bebas Neue", sans-serif;
+    border-bottom: 0.1vw solid  $cor2;
+    margin-bottom: 1.3vw;
+    @content;
+}
+
+
+
+@mixin inputs(){
+    border:1px solid $cor1;
+    padding: 0.4vw;
+    border-radius: 0.3vw;
+    color: $cor1;
+    font-size: 1.1vw;   
+    @content;
+}
+
+
+@mixin label(){
+   //border:1px solid rgb(128, 43, 0);
+   padding: 1vw;
+   display: flex;
+   align-items: center;
+   input{flex: 1; }
+   color:  darken($cor1,30%);
+   font-size: 1.1vw;
+   gap:1vw;
+   @content;
+}
+
+
+
+@mixin button(){
+    max-width: 30vw;
+    border:0.09765625vw;
+    padding:0.4vw;
+    border-radius: 0.3vw;
+    text-transform: capitalize;
+    font-size: 1.1vw;
+    margin-left: 0.9765625vw;
+    color: white;
+    @content;
+}
