@@ -44,6 +44,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/cadastro/react/dadosPessoais', [CadastrosControllers::class, 'DadosPessoais'])->name("Cadastro.ReactDados");
     Route::post('/larTemp/react/dadosIniciais', [LarTemporarioConroller::class, 'GetLarTemp'])->name("larTemp.DadosIniciais");
     Route::post('/pets/react/listaPets', [MeusPetsController::class, 'ListandoMeusPets'])->name("MeusPets.listas");
+
+    Route::get('/pets/react/DadosDoPet', [MeusPetsController::class, 'DadosDoPet'])->name("MeusPets.Dados");
     /*************************************************************************************************************/
 });
 

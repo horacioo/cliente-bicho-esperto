@@ -7,6 +7,7 @@ use App\Models\pets\MeusPets;
 use App\Models\Pets\vacinas;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class MeusPetsController extends Controller
 {
@@ -43,7 +44,19 @@ class MeusPetsController extends Controller
 
         // Retorna todos os dados do usuário
         $dadosUsuario = MeusPets::where('user_id', $request->input('user_id'))->get();
-        return $dadosUsuario;
+        
+        foreach($dadosUsuario as $pet){
+            $dadosUsuarioCompletos[] = array(
+                "id" => $pet->id,
+                "nome" => $pet->nome,
+                "foto" => $pet->foto,
+                "tipo" => $pet->tipo,
+                "descricao" => $pet->descricao,
+                "tutorNome" => $pet->Tutor->name,
+                "tutorId" => $pet->Tutor->id,
+            ); 
+        }
+        return $dadosUsuarioCompletos;
     }
     /*************************************************************/
 
@@ -259,6 +272,66 @@ class MeusPetsController extends Controller
     public function ListandoMeusPets(Request $request){
         $user_id =  $request->input('user_id');
         $dadosUsuario = MeusPets::where('user_id', $request->input('user_id'))->get();
-        return $dadosUsuario;
+        foreach($dadosUsuario as $pet){
+            $dadosUsuarioCompletos[] = array(
+                "id" => $pet->id,
+                "nome" => $pet->nome,
+                "foto" => $pet->foto,
+                "tipo" => $pet->tipo,
+                "descricao" => $pet->descricao,
+                "tutorNome" => $pet->Tutor->name,
+                "tutorId" => $pet->Tutor->id,
+            ); 
+        }
+        return $dadosUsuarioCompletos;
+        //return response()->json(['dados',$dadosUsuario], 500);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public function DadosDoPet(Request $request){
+        $pet =  $request->input('pet');
+        $tutor =  $request->input('tutor');
+
+        /***********************************************************************************/
+        $select="SELECT u.id as usuario , p.nome, p.foto, p.tipo, p.descricao,p.user_id 
+        FROM `meus_pets` as p
+        INNER join users as u  on u.name='".$tutor."'
+        WHERE nome='".$pet."'";
+        /***********************************************************************************/
+        $results = DB::select($select);
+        /***********************************************************************************/
+        return response()->json(['dados'=>$results], 200);
+     
+    }
+
+
+
+
 }
+
+
+
+
