@@ -44,8 +44,8 @@ class MeusPetsController extends Controller
 
         // Retorna todos os dados do usuário
         $dadosUsuario = MeusPets::where('user_id', $request->input('user_id'))->get();
-        
-        foreach($dadosUsuario as $pet){
+
+        foreach ($dadosUsuario as $pet) {
             $dadosUsuarioCompletos[] = array(
                 "id" => $pet->id,
                 "nome" => $pet->nome,
@@ -54,7 +54,7 @@ class MeusPetsController extends Controller
                 "descricao" => $pet->descricao,
                 "tutorNome" => $pet->Tutor->name,
                 "tutorId" => $pet->Tutor->id,
-            ); 
+            );
         }
         return $dadosUsuarioCompletos;
     }
@@ -163,11 +163,11 @@ class MeusPetsController extends Controller
         $dados  = $vac::find($id);
         $x = $dados->update([
             'vacina'    => $vacina,
-              'data'    => $data,
-              'proxima' => $proxima
+            'data'    => $data,
+            'proxima' => $proxima
         ]);
 
-        if($x) {
+        if ($x) {
             return response()->json(['status' => 'success', 'message' => 'deu certo', "dados" => $this->GetVacinas($pet)], 200);
         } else {
             return response()->json(['status' => 'error', 'message' => 'deu erro', 'idPet' => $pet], 500);
@@ -175,7 +175,6 @@ class MeusPetsController extends Controller
 
 
         echo json_encode($request->all());
-
     }
     /**************************************************************/
     /**************************************************************/
@@ -206,14 +205,18 @@ class MeusPetsController extends Controller
 
     /**************************************************************/
     /**************************************************************/
-    private function GetVacinas($pet_id)
+    public function GetVacinas($pet_id)
     {
+       
         $vac = new vacinas();
         $dados = $vac::where('pet_id', $pet_id)->get();
-        return $dados;
+        //return $dados;
+        return response()->json(['status' => 'ok','info'=>'ok', 'dados'=>$dados], 200);
     }
     /**************************************************************/
     /**************************************************************/
+
+
 
 
 
@@ -222,6 +225,15 @@ class MeusPetsController extends Controller
     public function update(Request $request)
     {
         $fotoPath = 0;
+
+        /*return response()->json([
+            'tutor' => $request->user_id, 
+            'id' => $request->id, 
+            'nome' => $request->nome,
+            'descricao' => $request->descricao, 
+         
+        ],200);*/
+
 
         // Busca o registro existente pelo id
         $cadastro = MeusPets::find($request->input('id'));
@@ -235,12 +247,13 @@ class MeusPetsController extends Controller
 
             if ($request->hasFile('foto')) {
                 $fotoPath = $request->file('foto')->store('fotos', 'public');
+
                 $cadastro->foto = $fotoPath;
             }
 
             // Salva as alterações
             if ($cadastro->save()) {
-                return response()->json(['status' => 'success', 'all' => $request->all(), 'message' => 'Registro atualizado com sucesso']);
+                return response()->json(['foto' => $fotoPath, 'status' => 'success', 'all' => $request->all(), 'message' => 'Registro atualizado com sucesso']);
             }
         } else {
 
@@ -269,10 +282,11 @@ class MeusPetsController extends Controller
 
 
 
-    public function ListandoMeusPets(Request $request){
+    public function ListandoMeusPets(Request $request)
+    {
         $user_id =  $request->input('user_id');
         $dadosUsuario = MeusPets::where('user_id', $request->input('user_id'))->get();
-        foreach($dadosUsuario as $pet){
+        foreach ($dadosUsuario as $pet) {
             $dadosUsuarioCompletos[] = array(
                 "id" => $pet->id,
                 "nome" => $pet->nome,
@@ -281,7 +295,7 @@ class MeusPetsController extends Controller
                 "descricao" => $pet->descricao,
                 "tutorNome" => $pet->Tutor->name,
                 "tutorId" => $pet->Tutor->id,
-            ); 
+            );
         }
         return $dadosUsuarioCompletos;
         //return response()->json(['dados',$dadosUsuario], 500);
@@ -311,27 +325,19 @@ class MeusPetsController extends Controller
 
 
 
-    public function DadosDoPet(Request $request){
+    public function DadosDoPet(Request $request)
+    {
         $pet =  $request->input('pet');
         $tutor =  $request->input('tutor');
 
         /***********************************************************************************/
-        $select="SELECT u.id as usuario , p.nome, p.foto, p.tipo, p.descricao,p.user_id 
+        $select = "SELECT u.id as usuario , p.nome, p.foto, p.tipo, p.descricao,p.user_id ,p.id
         FROM `meus_pets` as p
-        INNER join users as u  on u.name='".$tutor."'
-        WHERE nome='".$pet."'";
+        INNER join users as u  on u.name='" . $tutor . "'
+        WHERE nome='" . $pet . "'";
         /***********************************************************************************/
         $results = DB::select($select);
         /***********************************************************************************/
-        return response()->json(['dados'=>$results], 200);
-     
+        return response()->json(['dados' => $results], 200);
     }
-
-
-
-
 }
-
-
-
-

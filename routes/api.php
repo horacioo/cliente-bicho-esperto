@@ -4,6 +4,7 @@ use App\Http\Controllers\Pets\CadastrosControllers;
 use App\Http\Controllers\pets\LarTemporarioConroller;
 use App\Http\Controllers\pets\loginController;
 use App\Http\Controllers\pets\MeusPetsController;
+use App\Http\Controllers\pets\tiposDePetsController;
 use App\Models\Pets\Cadastros;
 use App\Models\pets\LarTemporario;
 use Illuminate\Http\Request;
@@ -31,6 +32,27 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+Route::GET('/meuspets/react/vacinasLista/{pet_id}', [MeusPetsController::class, 'GetVacinas'])->name("Vacinas.info");
+
+
+
+
+
+
+
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/cadastro/save', [CadastrosControllers::class, 'salvar'])->name("Cadastro.salvar");
     Route::post('/larTemporario/save', [LarTemporarioConroller::class, 'salvar'])->name("lar.salvar");
@@ -46,7 +68,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/pets/react/listaPets', [MeusPetsController::class, 'ListandoMeusPets'])->name("MeusPets.listas");
 
     Route::get('/pets/react/DadosDoPet', [MeusPetsController::class, 'DadosDoPet'])->name("MeusPets.Dados");
+    Route::get('/pets/react/tipos', [tiposDePetsController::class, 'listaTipos'])->name("Tipos.all");
+    
     /*************************************************************************************************************/
+
 });
 
 
